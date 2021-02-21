@@ -21,6 +21,7 @@ function ShopImg(name, source , show) {
     ShopImg.allImg.push(this);
 }
 ShopImg.allImg = [];
+
 new ShopImg('bag', 'img/bag.jpg');
 new ShopImg('banana', 'img/banana.jpg');
 new ShopImg('rom', 'img/bathroom.jpg');
@@ -41,7 +42,8 @@ new ShopImg('unicorn', 'img/unicorn.jpg');
 new ShopImg('usb', 'img/usb.gif');
 
 
-console.log(ShopImg.allImg);
+// console.log(ShopImg.allImg[0]['name']);
+// console.log(ShopImg.allImg[0].votes);
 
 function generateRandomIndex() {
     return Math.floor(Math.random() * ShopImg.allImg.length);
@@ -63,8 +65,13 @@ function generateRandomIndex() {
         console.log(ShopImg.allImg[leftImgIndex]);
 
         leftImgElement.src = ShopImg.allImg[leftImgIndex].source;
+        ShopImg.allImg[leftImgIndex].show++
         centerImgElmenet.src = ShopImg.allImg[centerImgIndex].source;
+        ShopImg.allImg[centerImgIndex].show++
+
         rightImgElmenet.src = ShopImg.allImg[rightImgIndex].source;
+        ShopImg.allImg[rightImgIndex].show++
+
 
     }
 renderThreeImg();
@@ -72,13 +79,14 @@ leftImgElement.addEventListener('click', handleUserClick);
 centerImgElmenet.addEventListener('click', handleUserClick);
 rightImgElmenet.addEventListener('click', handleUserClick);
 // ShopResult.addEventListener('results-list');
-myBtn.addEventListener('click',handleUserClick)
+myBtn.addEventListener('click',showList)
 
 function handleUserClick(event) {
     userAttemtesCounter++;
     console.log(event.target.id);
 
     if (userAttemtesCounter < maxAttempts) {
+
         if (event.target.id === 'left-img') {
             ShopImg.allImg[leftImgIndex].votes++
         } else if (event.target.id === "center-img") {
@@ -91,21 +99,48 @@ function handleUserClick(event) {
 
     }
     else {
-       let list;
-        let ShopResult; 
-        for (let i = 0; i < ShopImg.allImg.length; i++) {
-            ShopResult = document.createElement('li');
-            list.appendChild(ShopResult);
-            ShopResult.textContent = ShopImg.allImg[i].name + 'have' + ShopImg.allImg[i].votes + 'votes';
+        // show the list
 
-        }
+
+    //    let list getElementById(); 
+    //     let ShopResult; 
+    //     for (let i = 0; i < ShopImg.allImg.length; i++) {
+    //         ShopResult = document.createElement('li');
+    //         list.appendChild(ShopResult);
+    //         ShopResult.textContent = ShopImg.allImg[i].name + 'have' + ShopImg.allImg[i].votes + 'votes';
+
+    //     }
+
         
         leftImgElement.removeEventListener('click', handleUserClick);
         centerImgElmenet.removeEventListener('click', handleUserClick);
         rightImgElmenet.removeEventListener('click', handleUserClick);
-
-
+        
+        
     }
 }
 
+// making a show list function:
+function showList(event){
+    let list = document.getElementById('results-list');
+    console.log(list);
 
+    for(let i = 0; i < ShopImg.allImg.length; i++){
+        
+    //   console.log( ShopImg.allImg[i]); 
+    // 0
+    // 1
+    // 2
+    
+    let resultsItem =  document.createElement('li');
+    list.appendChild(resultsItem);
+    // banana had 3 votes, and was seen 5 times.
+        // console.log(ShopImg.allImg[0].votes);
+        resultsItem.textContent = ShopImg.allImg[i].name + ' had '+ ShopImg.allImg[i].votes +' votes, was seen ' + ShopImg.allImg[i].show  
+    }
+    
+    myBtn.removeEventListener('click',showList);
+
+}
+
+// declaring variables means creating a new variable
