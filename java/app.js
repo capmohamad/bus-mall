@@ -199,3 +199,26 @@ function showList(event) {
 }
 
 // declaring variables means creating a new variable
+
+
+function save(){
+    let storedData;
+    let parsedStoredData  = { seen:[] , vote:[]};
+    console.log();
+    if (localStorage.getItem('data') !== null){
+        storedData = localStorage.getItem('data');
+        parsedStoredData = JSON.parse(storedData);
+      
+        for (let i = 0 ; i < Images.all.length ; i++){
+            allSeen[i] += parsedStoredData.seen[i];
+            allVote[i] += parsedStoredData.vote[i];
+        }
+       
+    }
+    parsedStoredData.seen = allSeen;
+    parsedStoredData.vote = allVote;
+    let newDataToStore =JSON.stringify(parsedStoredData);
+    localStorage.setItem('data',newDataToStore);
+}
+
+// declaring variables means creating a new variable
